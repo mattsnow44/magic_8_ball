@@ -1,4 +1,4 @@
-@answers = [
+@default_answers = [
   'It is certain',
   'It is decidedly so',
   'Without a doubt',
@@ -21,6 +21,7 @@
   'Very doubtful'
 ]
 
+@answers = @default_answers.clone
 
 
 def menu
@@ -35,7 +36,36 @@ def menu
 end
 
 def calculate(question)
+  if question == 'add answer'
+    add_answer
+  elsif question == 'reset answers'
+    reset_answers
+  elsif question == 'print answers'
+    print_answers
+  else
   puts @answers.sample unless question == 'quit'
+  end
+end
+
+def add_answer
+  puts 'What answer would you like to add?'
+  print '> '
+  new_answer = gets.strip
+  if @answers.include? new_answer
+    puts 'That answer already exists'
+  else
+    @answers << new_answer
+    puts "#{new_answer} has been added!"
+  end
+end
+
+def reset_answers
+  @answers = @default_answers.clone
+  puts 'Answers have been reset'
+end
+
+def print_answers
+  puts @answers
 end
 
 menu
